@@ -82,15 +82,15 @@ You can use renv and conda side by side. renv tracks R; conda tracks Python and 
 
 ---
 
-## Working with an LLM (Day 3)
+## Working with an LLM
 
-You will use Claude in VS Code (or Cursor / Continue) to help you write code against this repo. To keep your raw data private:
+You can use Claude in VS Code (or Cursor / Codex / Local LLM with LM Studio) to help you write code against this repo. To keep your raw data private:
 
 1. **The LLM only ever sees what VS Code sees.** Open VS Code with `the-science-repository.llm.code-workspace` — this workspace deliberately excludes `data/raw/` and `data/processed/`.
 2. **Belt and suspenders:** [`.claude/settings.json`](.claude/settings.json) denies reads on those folders even if you opened the full workspace.
 3. **Scripts default to mock data.** As long as `DATA_MODE=mock`, every read goes through `data/mock/`. Flip to `real` only when you're actually running the analysis.
 
-This means: **one copy of every script, no duplication.** Mode is controlled by which workspace you open and one env var.
+This means: Mode is controlled by which workspace you open and one env var.
 
 ---
 
@@ -120,7 +120,7 @@ Quarto itself only knows one output folder: `output-dir: docs` (set in [`_quarto
 # _quarto.yml
 project:
   type: website
-  output-dir: docs            # every render goes here first
+  output-dir: docs            # every render goes here first; needs to be called docs for github pages
   post-render:
     - scripts/post_render.R   # then this script moves .pdf and .docx out
 ```
