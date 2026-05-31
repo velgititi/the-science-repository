@@ -14,12 +14,16 @@ the architecture diagram is a tool we install and understand today.
 > RStudio is the environment for Days 1–2. VS Code is introduced on Day 3 only.
 > Deep R syntax is Day 2. The Shiny app is **not** part of this workshop.
 >
-> Exercise slides carry a **⚠ Watch out** box listing the blockers you may
-> hit. Lets try to pre-empt them.
+> Two threads run through the day:
+>   1. **The kitchen analogy** — the repo is a kitchen; we keep mapping every
+>      folder and tool back to it so the structure builds up slowly.
+>   2. **Errors are normal** — we normalise red text early and teach how to read
+>      it, then pre-empt the usual blockers in a **⚠ Watch out** box on every
+>      exercise slide.
 
 ---
 
-# Part A — Framing
+# Part A — Framing & expectations
 
 ## Slide 1 — Welcome
 
@@ -37,7 +41,11 @@ Day 3: Reporting, publication, VS Code, and hypercharge your codebase
 **Speaker note:**
 Today is not about writing R. Today is about understanding the *system* — what
 each tool does and how they fit together — and getting it all installed. If your
-setup works at the end of today, Days 2 and 3 will be smooth. Often learned that setting everything up is one of the hardest steps, so we are spending a day together on this to get everything up and running. Because the set-up is what even the best LLMs and AI methods cannot help you with (as long as you do not want to give them full control of your computer)
+setup works at the end of today, Days 2 and 3 will be smooth. We've often learned
+that setting everything up is one of the hardest steps, so we are spending a day
+together on this to get everything up and running. Because the set-up is what
+even the best LLMs and AI methods cannot help you with (as long as you do not
+want to give them full control of your computer). Also understanding is important! It helps a lot in judging output and not feeling overwhelmed!
 
 ---
 
@@ -66,7 +74,30 @@ checklist, so it doubles as the promise and the proof.
 
 ---
 
-## Slide 3 — The whole system on one picture
+## Slide 3 — What we'll deliberately skip today
+
+**Title:** Setting expectations — *not* today
+
+**On slide:**
+
+```text
+Deep R syntax        → Day 2 (objects, functions, dataframes, modelling)
+VS Code              → Day 3 (RStudio is our environment for now)
+Real data            → Day 2/3 (everything today runs on safe mock data)
+Responsible AI use   → Day 3 (the repo's AI guardrails, in context)
+
+Today's single job: install the tools and understand how they fit together.
+```
+
+**Speaker note:**
+Setting scope up front lowers anxiety and frames the whole day. Keeping scope
+tight is intentional — if your setup works by the end of today, you're exactly
+where you need to be. Everything on the right is parked for a specific later
+slot, not forgotten. We'll come back to this list tomorrow morning.
+
+---
+
+## Slide 4 — The whole system on one picture
 
 **Title:** Every box is a tool we install today
 
@@ -87,55 +118,141 @@ Packages + Coding assistants ─→ code ────┘   │
 **Speaker note:**
 Keep this diagram visible all day. Every time we install something, point back
 to its box. The center is RStudio; everything else feeds into or out of it.
+(Presenter: Jannis — intro slides here.)
 
 ---
 
-## Slide 4 — The mental model of this repository
+## Slide 5 — Why this stack? Free, open, and yours
+
+**Title:** Every tool today is free and open — on purpose
+
+**On slide:**
+
+```text
+R & friends    free; huge community; you keep your analysis   (vs SPSS: £££, closed)
+Markdown       plain text; machine-readable; no vendor can lock or change it (vs Word)
+Git / GitHub   open standard; the full history is yours to keep and to move
+Zotero         free, open reference manager; plugs into Word, Quarto, Overleaf
+Quarto         free, open publishing; one source → website, PDF, Word
+
+Open + free + standard = reproducible, shareable, and future-proof.
+No licence to expire. No format you can't open in ten years.
+```
+
+**Speaker note:**
+This is the "why" behind the whole day. Closed tools (SPSS, Word) cost money and
+can lock your work in a format only they can open — and they can silently change
+it under you. Open tools are free, have huge communities (so the error you hit is
+already answered somewhere online), and the files are plain text you fully own.
+We'll repeat this "why" briefly each time we meet a new tool, rather than
+re-arguing it.
+
+---
+
+## Slide 6 — The repo is a kitchen
+
+**Title:** One analogy for the whole repository
+
+**On slide:**
+
+```text
+data/         the pantry       →  ingredients you cook with
+references/   the cookbook     →  the sources you cite
+R/            the kitchen + your techniques  →  reusable functions (how you cook)
+reports/      the recipes      →  step-by-step instructions (.qmd files)
+renders/      the finished dishes  →  plated and served (website + paper)
+renv/         your exact appliances & brands  →  the dish tastes the same in any kitchen
+GitHub        the photo-log of every version  →  and how you share with other cooks
+```
+
+**Speaker note:**
+This is the through-line for the day — keep coming back to it. The repo is a
+kitchen. Today we mostly *stock the pantry* and *check the appliances work*; we
+actually *cook* on Day 2. The one idea to plant now: you write the recipe once
+and prepare the sauce (the numbers) once in the kitchen — then several dishes
+(website, paper) are plated from that same sauce. Nothing is re-chopped by hand
+for each dish.
+
+---
+
+## Slide 7 — The mental model of this repository
 
 **Title:** One repo = data + engine + two outputs
 
 **On slide:**
 
 ```text
-R/        computes   → the analysis engine (setup + reusable functions)
-reports/  present    → the recipes you render (webpage + manuscript)
-renders/  are results→ the finished website and paper
+R/        computes   → the analysis engine (setup + reusable functions)   — the kitchen
+reports/  create     → the recipes you render (webpage + manuscript)      — the recipes
+renders/  are results→ the finished website and paper                     — the dishes
 
-Change a function in R/ and BOTH outputs update on the next render.
+Cook the sauce once in R/ and BOTH outputs use it on the next render.
 Nothing is copied by hand between them.
 ```
 
 **Speaker note:**
 This is the single most important idea of the repo. `R/` is the source of truth
-for the numbers; `reports/` are just different ways to present them; `renders/`
-are the built products. We'll see each folder today.
+for the numbers; `reports/` are just different ways to use and
+present them; `renders/` are the built products. Change a
+function in `R/` and both the website and the paper update on the next render.
+We'll see each folder today.
 
 ---
 
-## Slide 5 — What lives where
+## Slide 8 — What lives where
 
-**Title:** A quick tour of the folders
+**Title:** A quick tour of the folders (the kitchen, room by room)
 
 **On slide:**
 
 ```text
-R/           analysis engine: 01_setup.R + functions/
-data/        mock/ (committed)  ·  raw/ & processed/ (private, gitignored)
-reports/     webpage/  ·  manuscript/   (the things you render)
-renders/     webpage/  ·  manuscript/   (the rendered outputs)
-references/  references.bib  (shared by website + manuscript)
-renv/        pinned package versions (renv.lock)
+R/           the kitchen: 01_setup.R + functions/   (techniques you reuse)
+data/        the pantry:  mock/ (committed)  ·  raw/ & processed/ (private, gitignored)
+reports/     the recipes: webpage/  ·  manuscript/  (what you render + the words you write)
+renders/     the dishes:  webpage/  ·  manuscript/  (the rendered outputs)
+references/  the cookbook: references.bib  (shared by website + manuscript)
+renv/        the appliances: pinned package versions (renv.lock)
 ```
 
 **Speaker note:**
-Each folder has its own README. The top-level README is the front door. We are
-*not* memorising this — we're building intuition for where things belong.
+Each folder has its own README — think of it as a label on each shelf. The
+top-level README is the front door to the kitchen. We are *not* memorising this —
+we're building intuition for where things belong, anchored to the kitchen we just
+introduced. Point back to the pantry/recipe/dish mapping as you go.
 
 ---
 
 # Part B — GitHub first
 
-## Slide 6 — What is Git and GitHub?
+## Slide 9 — When something breaks (and it will)
+
+**Title:** Errors are part of the process
+
+**On slide:**
+
+```text
+Errors are normal. Everyone in this room will see red text today.
+An error message is a clue, not a failure.
+
+When you hit one:
+  1. Read it slowly — the answer is usually right there (a path, a name, a missing thing)
+  2. Recall the last thing you did — the error points back to it
+  3. Copy the exact message into a search engine — someone has hit it before
+  4. Ask a neighbour, or ask us
+```
+
+**Speaker note:**
+Set the tone *before* the first hands-on step. The single biggest predictor of a
+smooth day is whether people panic at red text or read it. Normalise it loudly.
+Most messages name exactly what's wrong — a missing file, a wrong path, a
+function that isn't loaded. Teach the reflex: read → recall last action → search
+the exact text → ask. Most red text in the console or terminal is one of a
+handful of usual suspects; there's a full reference at the very end of today, and
+the ⚠ boxes on each exercise pre-empt the common ones.
+
+---
+
+## Slide 10 — What is Git and GitHub?
 
 **Title:** Version control: the safety net
 
@@ -151,11 +268,12 @@ A repository ("repo") = a project folder + its full change history
 **Speaker note:**
 GitHub is not just a cloud drive. It remembers *every* version, who changed
 what, and lets several people work on the same project without overwriting each
-other. That history is what makes research auditable.
+other. That history is what makes research auditable. In kitchen terms: it's a
+photo of the dish at every step, plus the way you hand the recipe to another cook.
 
 ---
 
-## Slide 7 — GitHub vocabulary
+## Slide 11 — GitHub vocabulary
 
 **Title:** The words you'll hear all day
 
@@ -183,7 +301,7 @@ rather than a leap of faith.
 
 ---
 
-## Slide 8 — EXERCISE: create a GitHub account
+## Slide 12 — EXERCISE: create a GitHub account
 
 **Title:** Step 1 — get an account
 
@@ -215,11 +333,11 @@ Can you log in and see your (empty) GitHub dashboard?
 **Speaker note:**
 If anyone already has an account, great — just log in. Check out the GitHub
 *Student/Education* benefits here (free Pro features, private Pages) — worth
-applying for with a university email, and relevant two slides from now.
+applying for with a university email, and relevant when we turn on Pages shortly.
 
 ---
 
-## Slide 9 — EXERCISE: fork the repository
+## Slide 13 — EXERCISE: fork the repository
 
 **Title:** Step 2 — make it yours
 
@@ -260,7 +378,10 @@ Today we all stay on the public fork.
 
 **Speaker note:**
 Everyone now owns a complete copy of the template — data, engine, and outputs.
-This is the starting point for the whole three days. You can pull in new changes from the original repository. You can even contribute back to the original repository. Lets say you find a cool new software, you can let us know by contributing back to the repository you forked from.
+This is the starting point for the whole three days. You can pull in new changes
+from the original repository. You can even contribute back to the original
+repository. Let's say you find a cool new software — you can let us know by
+contributing back to the repository you forked from.
 On the inevitable "is my public repo findable?" question: treat public as public.
 GitHub repos and Pages sites *can* be crawled and indexed, so "nobody has the
 link" is not privacy. The real protection is structural — the `.gitignore` keeps
@@ -270,7 +391,7 @@ private data. If the *project itself* must stay hidden, use a private repo
 
 ---
 
-## Slide 10 — Fork vs branch
+## Slide 14 — Fork vs branch
 
 **Title:** Two ways to make a copy — for different reasons
 
@@ -290,10 +411,12 @@ Branch  a parallel line of work INSIDE one repo
 Quick mental rule: you *fork* to take a project and make it your own; you
 *branch* to do a piece of work that you intend to fold back in. Today everyone
 forks. Tomorrow, in pairs, you'll branch and merge inside your fork.
+Forks have metal pieces that are not supposed to come together again; a branch may
+decide to grow back into the tree.
 
 ---
 
-## Slide 11 — EXERCISE: turn on your website
+## Slide 15 — EXERCISE: turn on your website
 
 **Title:** Step 3 — publish your analysis website
 
@@ -322,11 +445,11 @@ In YOUR fork on GitHub:
 This is the payoff moment. The website was rendered from the code in the repo,
 and GitHub is now serving *your* copy of it. Nobody wrote any HTML — it came from
 the analysis. If anyone made their repo private, this is where it bites — point
-them back to the Education benefit from Slide 8.
+them back to the Education benefit from the account-creation step.
 
 ---
 
-## Slide 12 — EXERCISE: your first commit
+## Slide 16 — EXERCISE: your first commit
 
 **Title:** Step 4 — edit the README link and commit
 
@@ -350,7 +473,7 @@ work locally later, you'll stage → commit → push as separate steps.)
 
 ---
 
-## Slide 13 — Forks, commits, merges — the picture
+## Slide 17 — Forks, commits, merges — the picture
 
 **Title:** What just happened, visually
 
@@ -371,7 +494,7 @@ more people.
 
 ---
 
-## Slide 14 — What must NEVER go on GitHub
+## Slide 18 — What must NEVER go on GitHub
 
 **Title:** Data protection checkpoint
 
@@ -395,7 +518,7 @@ protects you automatically.
 
 ---
 
-## Slide 15 — How the repo protects you: `.gitignore`
+## Slide 19 — How the repo protects you: `.gitignore`
 
 **Title:** Real data can't be committed by accident
 
@@ -410,15 +533,16 @@ data/processed/   gitignored    (cleaned data — also stays local)
 ```
 
 **Speaker note:**
-For day one of this workshop we use the mock dataset, so there's no risk. Tomorrow you can also bring your own data if you want to learn on your own data. In your own
-projects, `.gitignore` is the seatbelt: raw and processed data simply won't be
-pushed, even if you forget.
+For day one of this workshop we use the mock dataset, so there's no risk.
+Tomorrow you can also bring your own data if you want to learn on your own data.
+In your own projects, `.gitignore` is the seatbelt: raw and processed data simply
+won't be pushed, even if you forget.
 
 ---
 
 # Part C — R + RStudio
 
-## Slide 16 — R vs RStudio
+## Slide 20 — R vs RStudio
 
 **Title:** The engine and the cockpit
 
@@ -438,13 +562,15 @@ today — that's Day 2. Today we just need it working.
 
 ---
 
-## Slide 17 — EXERCISE: install R and RStudio
+## Slide 21 — EXERCISE: install R and RStudio
 
 **Title:** Step 5 — install the software
 
 **On slide:**
 
 ```text
+Go to: https://posit.co/download/rstudio-desktop (has links to both)
+
 1. Install R:        cran.r-project.org   (pick your OS, latest version)
 2. Install RStudio:  posit.co/download/rstudio-desktop  (free Desktop)
 3. Open RStudio — it finds R automatically
@@ -470,27 +596,42 @@ In the Console, type 1 + 1 and press Enter → you should see [1] 2
 
 **Speaker note:**
 This is where setup problems surface, so go slowly and help neighbours. The
-1 + 1 check confirms RStudio actually found R.
+1 + 1 check confirms RStudio actually found R — and it's your first command in
+the Console.
 
 ---
 
-## Slide 18 — EXERCISE: get the repo onto your laptop
+## Slide 22 — EXERCISE: get the repo onto your laptop
 
 **Title:** Step 6 — clone your fork
 
 **On slide:**
 
 ```text
-Easiest in RStudio:
+Cloning = downloading YOUR fork (with its full history) to your machine.
+
+In RStudio:
   File → New Project → Version Control → Git
   Repository URL: https://github.com/<your-username>/the-science-repository
   → Create Project
 
-Prefer buttons over tokens? GitHub Desktop (recommended companion):
-  Install desktop.github.com → sign in → File → Clone repository → your fork
-  Sign-in is handled in the browser — no Personal Access Token to set up.
+Two ways to handle the GitHub login — pick one:
 
-Cloning = downloading YOUR fork (with its full history) to your machine.
+  A. GitHub Desktop (easiest today)
+     Install desktop.github.com → sign in (in the browser) → File → Clone
+     No Personal Access Token to set up.
+
+  B. Personal Access Token / PAT (the sustainable, long-term setup)
+     In the R Console:
+        usethis::create_github_token()   # opens GitHub to create the token
+        gitcreds::gitcreds_set()         # paste it once; RStudio remembers it
+     Alternative:
+        Go to Github/Settings/Developer Settings/Personal Access Tokens/PAT
+```
+
+```text
+Heads up: this is the fiddliest step of the whole day. That's expected —
+we will get everyone through it. Take a breath; ask for help.
 ```
 
 **⚠ Watch out (common blockers):**
@@ -502,25 +643,24 @@ Cloning = downloading YOUR fork (with its full history) to your machine.
     git config --global user.name  "Your Name"
     git config --global user.email "you@university.edu"
 - Pushing over HTTPS no longer accepts your password. When asked, paste a
-  Personal Access Token (GitHub → Settings → Developer settings → PAT),
-  or run  usethis::create_github_token()  then  gitcreds::gitcreds_set().
-  Simplest way to skip all of this: use GitHub Desktop (above) — it signs
-  you in through the browser and handles credentials for you.
+  Personal Access Token (option B), or use GitHub Desktop (option A) which
+  signs you in through the browser and handles credentials for you.
 ```
 
 **Speaker note:**
 Cloning is the mirror image of forking: fork copies on GitHub, clone copies to
 your laptop. The identity + token setup is the single most common place people
-get stuck — budget time for it and have the PAT steps on a cheatsheet. This is
-also why GitHub Desktop is worth recommending: its browser sign-in removes the
-PAT blocker entirely, and its visual diffs and branch/merge view are genuinely
-helpful later when branches diverge. Keep RStudio's Git pane as the default for
-day-to-day commits; offer Desktop to anyone fighting authentication or who
-prefers a GUI.
+get stuck — budget time for it, normalise the frustration, and have the PAT steps
+on a cheatsheet. Recommend the two paths honestly: **GitHub Desktop unblocks you
+fastest today** (browser sign-in, no token, plus nice visual diffs and a
+branch/merge view that helps later). The **PAT is what survives long-term** —
+it works in RStudio's Git pane, the terminal, and scripts, and won't depend on a
+separate app being installed. Keep RStudio's Git pane as the default for
+day-to-day commits; offer Desktop to anyone fighting authentication.
 
 ---
 
-## Slide 19 — (Optional) Start a project from scratch
+## Slide 23 — (Optional) Start a project from scratch
 
 **Title:** How RStudio Projects get created
 
@@ -543,7 +683,7 @@ the start is best.
 
 ---
 
-## Slide 20 — Open the project, not the files
+## Slide 24 — Open the project, not the files
 
 **Title:** Always open via the .Rproj
 
@@ -565,7 +705,7 @@ Desktop.
 
 ---
 
-## Slide 21 — RStudio in 60 seconds
+## Slide 26 — RStudio in 60 seconds
 
 **Title:** The four panes (and the Terminal)
 
@@ -576,6 +716,7 @@ Source       where you write and save scripts
 Console      where R runs R commands
 Environment  the objects currently in memory
 Files/Plots/Packages/Help   manage files, see figures, read docs
+R project set-up  You change settings in your R project.
 
 Terminal tab (next to Console): your computer's command line —
   this is where git and `quarto render` commands run.
@@ -591,7 +732,7 @@ Console.
 
 # Part D — Environment control (renv)
 
-## Slide 22 — The "works on my machine" problem
+## Slide 27 — The "works on my machine" problem
 
 **Title:** Why pinning package versions matters
 
@@ -609,6 +750,8 @@ Two layers of reproducibility, one clean analogy:
 - **Git/GitHub** version your *code* — every change to your scripts is tracked.
 - **renv** versions your *packages* — the exact libraries your code depends on.
 You need both; pinned code running on drifting packages still breaks.
+In kitchen terms: `renv` pins the exact appliances and ingredient brands so the
+dish tastes the same in every kitchen.
 Concretely: I already built and tested this repo. Installing every package by
 hand on each of your laptops would take forever and still drift. Instead I took a
 *snapshot* of exactly what's installed (`renv.lock`), and you'll restore that
@@ -616,7 +759,7 @@ same snapshot in one command.
 
 ---
 
-## Slide 23 — What renv does
+## Slide 28 — What renv does
 
 **Title:** renv = a locked, per-project package library
 
@@ -636,7 +779,7 @@ isolated set of packages, described precisely in `renv.lock`.
 
 ---
 
-## Slide 24 — EXERCISE: restore the environment
+## Slide 29 — EXERCISE: restore the environment
 
 **Title:** Step 7 — install the exact packages
 
@@ -674,7 +817,7 @@ record it — but not today.
 
 # Part E — Documentation
 
-## Slide 25 — README: the front door
+## Slide 30 — README: the front door
 
 **Title:** Every project explains itself
 
@@ -697,7 +840,7 @@ changes, the README is the thing you update so it never lies to future-you.
 
 ---
 
-## Slide 26 — Markdown, lightly
+## Slide 31 — Markdown, lightly
 
 **Title:** READMEs are written in Markdown
 
@@ -709,44 +852,108 @@ changes, the README is the thing you update so it never lies to future-you.
 
 Plain text + a few symbols → clean, readable docs.
 It's the "Documentation" box in the diagram.
+
+Why Markdown?  It's plain text, which means:
+  - machine-readable and diff-able → Git can track every change
+  - open → no app owns it; it opens anywhere, today and in ten years
+  - nobody can silently re-format or lock it (unlike a .docx)
 ```
 
 **Speaker note:**
 You already used Markdown when you edited the README on GitHub. It's deliberately
-simple — the same syntax shows up in Quarto in a moment.
+simple — the same syntax shows up in Quarto in a moment. The deeper "why" is the
+one from this morning's open-source slide: plain text is yours forever. A Word
+file depends on Word; Markdown depends on nothing. That's why our docs, and soon
+our reports, are plain text.
 
 ---
 
-# Part F — Publishing: ingredients → outputs
+# Part F — Publishing: recipe → ingredients → outputs
 
-## Slide 27 — What goes into an output
+## Slide 32 — What it takes to produce an output
 
-**Title:** Quarto pulls four things together
+**Title:** A recipe, its ingredients, and a cook
 
 **On slide:**
 
 ```text
-R/ functions      the engine (the numbers)        ┐
-data/             the data                         ├─ ingredients
-references.bib    the citations                    ┘
-.qmd recipe       text + code chunks that tie it together
-        │  quarto render
+.qmd recipe       text + code chunks that say what to do      ┐
+R/ functions      the techniques (the numbers / the sauce)    │
+data/             the ingredients                             ├─ go into the dish
+references.bib    the citations                               ┘
+        │  quarto render   (the cook follows the recipe)
         ▼
    website  /  manuscript
 ```
 
 **Speaker note:**
 Transition slide. We've installed the tools — now, what does it actually take to
-produce an output? Four things. We already have the engine (`R/`). The next two
-ingredients are the **data** and the **references**; then **Quarto** is the recipe
-that combines them. The next few slides walk those four parts in order, so nothing
-appears out of nowhere.
+produce an output? A **recipe** (the `.qmd` pages), the **ingredients** (data and
+references), and a **cook** (Quarto, running the `R/` engine). The next slides go
+in that order: first the recipe and how it's read, then the ingredients it pulls
+in, then the cook that combines them — so nothing appears out of nowhere.
 
 ---
 
-## Slide 28 — Ingredient 1: the three data buckets
+## Slide 33 — What is Quarto? (the cook)
 
-**Title:** raw → processed → mock
+**Title:** Quarto = prose + code → polished output
+
+**On slide:**
+
+```text
+A .qmd file mixes:
+  - text (Markdown)
+  - R code chunks
+  - the results those chunks produce (tables, figures, numbers)
+
+Quarto runs the code and weaves results into the finished document.
+
+Why Quarto (and not R Markdown)?  Quarto is R Markdown's successor:
+  - one engine for R, Python, and Julia (not R-only)
+  - one source → HTML, PDF, Word, slides, whole websites
+  - actively developed, batteries included (citations, cross-references)
+```
+
+**Speaker note:**
+Quarto is the "Publisher" box — the cook that follows the recipe. The key idea:
+your figures and tables are *not* pasted in — they're generated when the document
+renders, straight from the `R/` engine. No copy-paste, no stale numbers. On the
+"why Quarto": if people know R Markdown, Quarto is the same idea grown up — one
+tool for many languages and many output formats, still free and open.
+
+---
+
+## Slide 34 — The recipe pages, read in order
+
+**Title:** A report is a recipe, read top to bottom
+
+**On slide:**
+
+```text
+reports/webpage/
+  01-data-preparation.qmd   load + clean the data        → writes the processed cache
+  02-descriptives.qmd       summarise it                 → uses the cache
+  03-analysis.qmd           model it                     → uses the cache
+
+Each page runs top → bottom. Setup first, results last.
+They all call the shared functions in  R/functions/  (the kitchen techniques).
+```
+
+**Speaker note:**
+Start with the scripts, because they drive everything else. This ordering —
+prepare, describe, analyse — is the backbone of the whole analysis, and the same
+order you'll work in on Day 2. Code always executes from the top down; nothing
+later works if something earlier failed. The crucial dependency: `01-data-prep`
+must run before the others because it *prepares the ingredients* — it pulls in the
+data and writes the processed cache that `02` and `03` then consume. That's our
+bridge to the next slide, where we look at exactly which ingredients it pulls in.
+
+---
+
+## Slide 35 — Ingredient 1: the three data buckets
+
+**Title:** raw → processed → mock (what 01-data-preparation handles)
 
 **On slide:**
 
@@ -757,18 +964,20 @@ data/mock/       synthetic stand-in — committed, safe to share, used in the wo
 ```
 
 **Speaker note:**
-Raw is input you never touch; processed is output a script creates; mock is the
-public, synthetic version we all run today. How it actually flows in this repo:
+Now we zoom into the ingredients that `01-data-preparation` from the last slide
+actually pulls in. Raw is input you never touch; processed is output a script
+creates; mock is the public, synthetic version we all run today. How it flows:
 by default the project reads from **mock** (no setup needed — `mock` is the
-default mode). When the website renders, the first page
-(`01-data-preparation`) cleans the data and *writes the cache*
-`data/processed/consumer_clean.rds`; the later pages reuse it. So `processed/`
-fills itself when you render — you don't create it by hand. (Switching to real
-data swaps the *source* to `data/raw/`; that's a Day 3 topic.)
+default mode). When the website renders, `01-data-preparation` cleans the data and
+*writes the cache* `data/processed/consumer_clean.rds`; the later pages reuse it.
+So `processed/` fills itself when you render — you don't create it by hand. In
+kitchen terms: raw is the produce as delivered, processed is your mise en place,
+mock is the practice ingredients we cook with today. (Switching to real data swaps
+the *source* to `data/raw/`; that's a Day 2/3 topic.)
 
 ---
 
-## Slide 29 — Ingredient 2: Zotero and citations
+## Slide 36 — Ingredient 2: Zotero and citations
 
 **Title:** Manage references once, cite everywhere
 
@@ -782,62 +991,21 @@ references/references.bib      ONE shared bibliography
    │
    ├──▶ used by the website
    └──▶ used by the manuscript
+
+Why Zotero?  Free and open (vs paid managers), and it plugs into
+Word, Quarto, and Overleaf — one library, cited everywhere.
 ```
 
 **Speaker note:**
-The second ingredient. You keep your library in Zotero, export a `.bib` file into
-`references/`, and *both* outputs cite from the same source. Change a reference
-once, it updates everywhere — no re-typing citations into two documents.
+The second ingredient — the cookbook. You keep your library in Zotero, export a
+`.bib` file into `references/`, and *both* outputs cite from the same source.
+Change a reference once, it updates everywhere — no re-typing citations into two
+documents. The "why" fits the open-source thread: Zotero is free and integrates
+across the tools we use, so your library isn't trapped in one program.
 
 ---
 
-## Slide 30 — What is Quarto?
-
-**Title:** Quarto = prose + code → polished output
-
-**On slide:**
-
-```text
-A .qmd file mixes:
-  - text (Markdown)
-  - R code chunks
-  - the results those chunks produce (tables, figures, numbers)
-
-Quarto runs the code and weaves results into the finished document.
-```
-
-**Speaker note:**
-Quarto is the "Publisher" box — the recipe that combines the ingredients. The key
-idea: your figures and tables are *not* pasted in — they're generated when the
-document renders, straight from the `R/` engine. No copy-paste, no stale numbers.
-
----
-
-## Slide 31 — Code runs top to bottom
-
-**Title:** A report is a recipe, read in order
-
-**On slide:**
-
-```text
-reports/webpage/
-  01-data-preparation.qmd   load + clean the data
-  02-descriptives.qmd       summarise it
-  03-analysis.qmd           model it
-
-Each page runs top → bottom. Setup first, results last.
-They all call the shared functions in  R/functions/.
-```
-
-**Speaker note:**
-This ordering — prepare, describe, analyse — is the backbone of the whole
-analysis, and the same order you'll work in on Day 2. Code always executes from
-the top down; nothing later works if something earlier failed. (This is also why
-`01-data-preparation` must run before the others — it builds the cache they need.)
-
----
-
-## Slide 32 — Two outputs from one engine
+## Slide 37 — Two outputs from one engine
 
 **Title:** Website and manuscript, same numbers
 
@@ -852,12 +1020,12 @@ Both reuse R/. Same data, same functions, two presentations.
 
 **Speaker note:**
 A website needs clickable HTML tables; a journal needs LaTeX. The repo formats
-the same results two ways. This is the right-hand side of the diagram: Report
-Output.
+the same results two ways — two dishes plated from the same sauce. This is the
+right-hand side of the diagram: Report Output.
 
 ---
 
-## Slide 33 — EXERCISE: render the website
+## Slide 38 — EXERCISE: render the website
 
 **Title:** Step 8 — build the site locally
 
@@ -881,45 +1049,64 @@ Open renders/webpage/index.html to see it.
   page builds the data/processed cache the others depend on.
 - If "quarto: command not found", update RStudio (recent versions bundle
   Quarto) or install from quarto.org.
-- The manuscript also needs a LaTeX engine (tinytex) — that's a Day 3 topic.
-  The WEBSITE is today's finish line.
 ```
 
 **Speaker note:**
 This is the same render that GitHub ran for your Pages site. Now you can do it on
 your own laptop and preview before pushing. If it builds, your R + renv + Quarto
-chain is fully working — that's the Day 1 finish line.
+chain is fully working — that's the **Day 1 finish line**. The manuscript (LaTeX)
+is the next, optional slide; if we're short on time it moves to Day 3 and nothing
+today depends on it.
 
 ---
 
-## Slide 34 — The manuscript and Overleaf
+## Slide 39 — (Optional, if time) The manuscript: LaTeX + Overleaf
 
-**Title:** The paper, and how co-authors join in
+**Title:** The second output — the paper, and how co-authors join in
 
 **On slide:**
 
 ```text
-quarto render reports/manuscript
-  → generates the data-driven parts (methods, results, figures, tables)
-  → assembled by renders/manuscript/main.tex into manuscript.pdf
+The website is today's finish line. The manuscript is the SAME engine, second dish.
+
+To build the PDF you need a LaTeX engine (one-time install):
+  in the R Console:
+    install.packages("tinytex")
+    tinytex::install_tinytex()
+
+Then:
+  quarto render reports/manuscript
+    → generates the data-driven parts (methods, results, figures, tables)
+    → renders/manuscript/main.tex assembles them into manuscript.pdf
 
 Overleaf:
   the self-contained renders/manuscript/ folder can sync to Overleaf
   → online, collaborative LaTeX writing with co-authors
 ```
 
+**⚠ Watch out (common blockers):**
+
+```text
+- tinytex downloads a full LaTeX distribution — needs internet and a few minutes.
+- The manuscript needs the LaTeX engine above; the WEBSITE never does.
+- Short on time? Skip this — we cover LaTeX + Overleaf properly on Day 3.
+```
+
 **Speaker note:**
-You don't need Overleaf today. The point is that the manuscript folder is
-self-contained, so it can live on Overleaf for co-authoring while the data-driven
-parts still come from your R code. We go deeper on Day 3.
+This slide is movable: if the room is fast, we install `tinytex` and render the
+PDF today so people see both outputs from one engine; if not, we move the whole
+thing to Day 3 — nothing on the checklist depends on it. The point either way:
+the manuscript folder is self-contained, so it can live on Overleaf for
+co-authoring while the data-driven parts still come from your R code. We go deeper
+on Day 3.
 
 ---
 
 # Part G — Wrap-up
 
-## Slide 35 — When something breaks: common blockers
+## Slide 40 — Quick reference: common blockers
 
-**Title:** Where people get stuck (and the fix)
+**Title:** The day's usual suspects (and the fix)
 
 **On slide:**
 
@@ -934,33 +1121,14 @@ A single page won't render     → render the whole reports/webpage folder
 ```
 
 **Speaker note:**
-Keep this as the catch-all reference slide. Most Day 1 pain is one of these seven.
-Normalise it: errors are expected, and a structured error message is a clue, not a
-failure. This is also the page to point at during the optional afternoon support.
+The catch-all reference for the day — pairs with the "errors are normal" slide
+from the morning. Most Day 1 pain is one of these seven, and a structured error
+message is a clue, not a failure. Read it, search the exact text, then ask. This
+is also the page to point at during the optional afternoon support.
 
 ---
 
-## Slide 36 — What we deliberately skipped
-
-**Title:** Not today
-
-**On slide:**
-
-```text
-Deep R syntax        → Day 2 (objects, functions, dataframes, modelling)
-VS Code              → Day 3 (RStudio is our environment for now)
-Real data            → Day 3 (everything today runs on safe mock data)
-Responsible AI use   → Day 3 (the repo's AI guardrails, in context)
-```
-
-**Speaker note:**
-Keeping scope tight is intentional. If your setup works, you're exactly where you
-need to be. Everything on the right is parked for a specific later slot, not
-forgotten.
-
----
-
-## Slide 37 — End-of-Day-1 checklist
+## Slide 41 — End-of-Day-1 checklist
 
 **Title:** Before you leave today
 
@@ -978,13 +1146,13 @@ forgotten.
 ```
 
 **Speaker note:**
-Remember the words from this morning (Slide 2)? This is the same list, now as
-done/not-done. Run through it as an exit check. Anyone with unticked boxes should
-grab the optional support session — Day 2 assumes all of this works.
+Remember the words from this morning's vocabulary check? This is the same list,
+now as done/not-done. Run through it as an exit check. Anyone with unticked boxes
+should grab the optional support session — it helps for Day 2 if all of this works.
 
 ---
 
-## Slide 38 — Tomorrow
+## Slide 42 — Tomorrow
 
 **Title:** Day 2 — analyse the data in R
 
@@ -999,5 +1167,7 @@ With the scaffold in place, tomorrow we:
 ```
 
 **Speaker note:**
-Everything we installed today becomes the workbench for Day 2. The structure you
-set up is what makes the analysis easy to follow and easy to share. Bring your own data if you want.
+Everything we installed today becomes the workbench for Day 2 — the kitchen is
+stocked and the appliances work; tomorrow we cook. The structure you set up is
+what makes the analysis easy to follow and easy to share. Bring your own data if
+you want.
