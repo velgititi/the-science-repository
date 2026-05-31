@@ -1,0 +1,121 @@
+---
+title: "A first reproducible report"
+subtitle: "Day 2 · Act 4 — code, prose, and results in one document"
+date: today
+format:
+  html:
+    toc: true
+    code-fold: show
+    embed-resources: true
+    theme: cosmo
+execute:
+  warning: false
+  message: false
+---
+
+```{r setup}
+#| include: false
+# This chunk runs first and is hidden from the page (include: false).
+#
+# A report needs to find the project's files, but it renders from its OWN
+# folder, so here::here() would stop too early. Instead we anchor on the git
+# root — the top of the repository — and build every path from there. This is
+# the exact same line the real project pages use; look at the top of
+# reports/webpage/01-data-preparation.qmd and you will recognise it.
+root <- rprojroot::find_root(rprojroot::is_git_root)
+
+library(dplyr)
+library(ggplot2)
+
+# Load our engine (Act 3) and the raw teaching data, anchored at the repo root.
+source(file.path(root, "workshop", "materials", "day_2", "03_functions.R"))
+raw   <- readr::read_csv(
+  file.path(root, "data", "mock", "consumer_data_raw.csv"),
+  show_col_types = FALSE
+)
+clean <- clean_consumer(raw)
+
+# Two vectors we'll report on inline, in prose, further down.
+pi_all      <- clean$purchase_intention
+pi_combined <- clean$purchase_intention[clean$condition == "combined_frame"]
+```
+
+## What a Quarto report is
+
+This document is a `.qmd` file: ordinary prose (like this sentence) interleaved
+with **code chunks** that R runs when the document is *rendered*. The output —
+tables, figures, numbers — is dropped straight into the page. Nothing is
+copy-pasted from the Console, so the report can never drift out of sync with the
+analysis. Re-render it and every number updates itself.
+
+A chunk is fenced like this and shows both the code and its result (click
+**Code** to fold or unfold it):
+
+```{r}
+1 + 1
+```
+
+## The data
+
+We read the same 300-participant teaching dataset as the scripts, and clean it
+with `clean_consumer()` — the function we defined in
+`03_functions.R`. The report does not *re-implement* the cleaning; it *reuses*
+it. One source of truth.
+
+```{r}
+glimpse(select(clean, participant_id, condition, age, purchase_intention))
+```
+
+## Does the message frame move purchase intention?
+
+`pi_by_condition()` summarises the outcome by experimental condition.
+`knitr::kable()` turns the resulting data frame into a proper table.
+
+```{r}
+#| label: tbl-pi
+#| tbl-cap: "Mean purchase intention (1–7) by message frame."
+knitr::kable(pi_by_condition(clean), digits = 2)
+```
+
+The `combined_frame` row stands out. Across all `r nrow(clean)` shoppers,
+purchase intention sat just above the midpoint of the 1–7 scale
+(`r apa_msd(pi_all)`), and it was highest in the combined-frame condition
+(`r apa_msd(pi_combined)`).
+
+Those statistics are **computed, not typed**. The second one is written in the
+source as the inline expression `r knitr::inline_expr("apa_msd(pi_combined)")`,
+which calls `apa_msd()` from the engine in `03_functions.R` and formats the mean
+and SD in APA 7th-edition style (italic *M* and *SD*). Change the data and
+re-render, and the sentence updates itself — the prose can never drift out of
+step with the analysis. A figure makes the spread behind those means visible:
+
+```{r}
+#| label: fig-pi
+#| fig-cap: "Purchase intention by message frame."
+#| fig-width: 7
+#| fig-height: 4
+plot_pi(clean)
+```
+
+## Where this goes next
+
+You have now seen the whole arc in miniature: **console → script → functions →
+report**. The pattern in this one file — *source the shared engine, call its
+functions, narrate the result* — is exactly how the project's website is built.
+
+This afternoon you will work inside the full version of it:
+
+- the engine lives in [`R/01_setup.R`](../../../R/01_setup.R) and
+  [`R/functions/`](../../../R/functions/);
+- the report pages live in
+  [`reports/webpage/`](../../../reports/webpage/) — open
+  `01-data-preparation.qmd` and you will see the grown-up twin of this file.
+
+Render this document yourself from the project root with:
+
+```bash
+quarto render workshop/materials/day_2/05_report.qmd
+```
+
+The HTML lands next to the `.qmd`. Open it in a browser — that is a complete,
+reproducible report built from nothing but code.

@@ -11,8 +11,8 @@ clean <- get_clean_consumer_data()
 ```
 
 Three questions, three models — all defined once in
-[`R/functions/analysis.R`](https://github.com/your-username/the-science-repository/blob/main/R/functions/analysis.R)
-and reused by the [manuscript](https://github.com/your-username/the-science-repository/tree/main/reports/manuscript).
+[`R/functions/analysis.R`](https://github.com/TheDataFlowCompany/the-science-repository/blob/main/R/functions/analysis.R)
+and reused by the [manuscript](https://github.com/TheDataFlowCompany/the-science-repository/tree/main/reports/manuscript).
 
 ## Main effect: does the frame move purchase intention?
 
@@ -71,13 +71,13 @@ Every result on this page came from somewhere shared:
 
 | On this page | Defined in |
 | --- | --- |
-| `fit_main_model()`, `fit_mediation_models()`, `fit_moderation_model()` | [`R/functions/analysis.R`](https://github.com/your-username/the-science-repository/blob/main/R/functions/analysis.R) |
-| `plot_moderation()` and the other plots | [`R/functions/plotting.R`](https://github.com/your-username/the-science-repository/blob/main/R/functions/plotting.R) |
+| `fit_main_model()`, `fit_mediation_models()`, `fit_moderation_model()` | [`R/functions/analysis.R`](https://github.com/TheDataFlowCompany/the-science-repository/blob/main/R/functions/analysis.R) |
+| `plot_moderation()` and the other plots | [`R/functions/plotting.R`](https://github.com/TheDataFlowCompany/the-science-repository/blob/main/R/functions/plotting.R) |
 | The cleaned data | written by [page 1](01-data-preparation.qmd), read here |
-| Citations `[@baron1986]` | [`references/references.bib`](https://github.com/your-username/the-science-repository/blob/main/references/references.bib) |
+| Citations `[@baron1986]` | [`references/references.bib`](https://github.com/TheDataFlowCompany/the-science-repository/blob/main/references/references.bib) |
 
 Rename `purchase_intention` in `R/01_setup.R` and `R/functions/data_loading.R`
-— two files — and this website, the Shiny app, and the manuscript all follow.
+— two files — and this website and the manuscript all follow.
 
 ## References
 

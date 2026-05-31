@@ -19,7 +19,7 @@ required_packages <- c(
 )
 
 to_install <- setdiff(required_packages, rownames(installed.packages()))
-if (length(to_install) > 0) install.packages(to_install)
+if (length(to_install) > 0) install.packages(to_install, repos = "https://cloud.r-project.org")
 
 invisible(lapply(required_packages, library, character.only = TRUE))
 
@@ -32,24 +32,6 @@ invisible(lapply(required_packages, library, character.only = TRUE))
 
 project_path <- function(...) {
   file.path(rprojroot::find_root(rprojroot::is_git_root), ...)
-}
-
-data_mode <- function() {
-  mode <- Sys.getenv("DATA_MODE", unset = "mock")
-  if (!mode %in% c("mock", "real")) {
-    stop("DATA_MODE must be 'mock' or 'real' (got '", mode, "'). Edit your .Renviron.")
-  }
-  mode
-}
-
-data_path <- function(...) {
-  subdir <- if (data_mode() == "mock") "mock" else "raw"
-  base   <- Sys.getenv("RAW_DATA_DIR", unset = "")
-  if (data_mode() == "real" && nzchar(base)) {
-    file.path(base, ...)
-  } else {
-    project_path("data", subdir, ...)
-  }
 }
 
 processed_path <- function(...) project_path("data", "processed", ...)
@@ -71,5 +53,4 @@ source(project_path("R", "functions", "data_loading.R"))
 source(project_path("R", "functions", "analysis.R"))
 source(project_path("R", "functions", "plotting.R"))
 
-message("Setup complete. DATA_MODE = ", data_mode(),
-        ". Project root: ", project_path())
+message("Setup complete. Project root: ", project_path())

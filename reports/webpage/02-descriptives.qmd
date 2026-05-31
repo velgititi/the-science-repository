@@ -18,7 +18,7 @@ patterns**.
 ## Outcomes by condition
 
 `descriptives_by_condition()` lives in
-[`R/functions/analysis.R`](https://github.com/your-username/the-science-repository/blob/main/R/functions/analysis.R)
+[`R/functions/analysis.R`](https://github.com/TheDataFlowCompany/the-science-repository/blob/main/R/functions/analysis.R)
 and is shared with the manuscript, so the numbers can't drift between the two.
 
 ```{r}
