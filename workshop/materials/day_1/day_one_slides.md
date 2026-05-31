@@ -12,7 +12,10 @@ the architecture diagram is a tool we install and understand today.
 > leaves with a broken setup.
 >
 > RStudio is the environment for Days 1–2. VS Code is introduced on Day 3 only.
-> Deep R syntax is Day 2. The optional Shiny app is **not** covered.
+> Deep R syntax is Day 2. The Shiny app is **not** part of this workshop.
+>
+> Exercise slides carry a **⚠ Watch out** box listing the blockers you may
+> hit. Lets try to pre-empt them.
 
 ---
 
@@ -38,7 +41,32 @@ setup works at the end of today, Days 2 and 3 will be smooth. Often learned that
 
 ---
 
-## Slide 2 — The whole system on one picture
+## Slide 2 — Who knows these words?
+
+**Title:** A quick vocabulary check
+
+**On slide:**
+
+```text
+fork        commit        push / pull       branch / merge       stage
+repository  RStudio       .Rproj            renv                 snapshot
+Quarto      render        .qmd              GitHub Pages         Overleaf
+```
+
+**Key line:**
+
+```text
+Don't know them yet? Perfect. After today, we hope you do.
+```
+
+**Speaker note:**
+Ask for a show of hands per word. The point is to lower anxiety: this exact list is
+what we will have ticked off by 16:30. We will return to it as the end-of-day
+checklist, so it doubles as the promise and the proof.
+
+---
+
+## Slide 3 — The whole system on one picture
 
 **Title:** Every box is a tool we install today
 
@@ -62,7 +90,7 @@ to its box. The center is RStudio; everything else feeds into or out of it.
 
 ---
 
-## Slide 3 — The mental model of this repository
+## Slide 4 — The mental model of this repository
 
 **Title:** One repo = data + engine + two outputs
 
@@ -84,7 +112,7 @@ are the built products. We'll see each folder today.
 
 ---
 
-## Slide 4 — What lives where
+## Slide 5 — What lives where
 
 **Title:** A quick tour of the folders
 
@@ -97,7 +125,6 @@ reports/     webpage/  ·  manuscript/   (the things you render)
 renders/     webpage/  ·  manuscript/   (the rendered outputs)
 references/  references.bib  (shared by website + manuscript)
 renv/        pinned package versions (renv.lock)
-.claude/     rules that stop AI tools from reading your raw data
 ```
 
 **Speaker note:**
@@ -108,7 +135,7 @@ Each folder has its own README. The top-level README is the front door. We are
 
 # Part B — GitHub first
 
-## Slide 5 — What is Git and GitHub?
+## Slide 6 — What is Git and GitHub?
 
 **Title:** Version control: the safety net
 
@@ -128,7 +155,7 @@ other. That history is what makes research auditable.
 
 ---
 
-## Slide 6 — GitHub vocabulary
+## Slide 7 — GitHub vocabulary
 
 **Title:** The words you'll hear all day
 
@@ -137,7 +164,8 @@ other. That history is what makes research auditable.
 ```text
 Fork    Make your own copy of someone else's repo on GitHub
 Clone   Download a repo to your computer
-Commit  Save a labelled snapshot of your changes
+Stage   Pick which changes go into the next commit
+Commit  Save a labelled snapshot of the staged changes
 Push    Send your commits up to GitHub
 Pull    Bring GitHub's changes down to your computer
 Branch  A separate line of work
@@ -145,15 +173,17 @@ Merge   Combine work from different branches
 ```
 
 **Speaker note:**
-Don't worry about memorising. Today you'll *fork* once, then *commit* and *push*
-small changes. Branches and merges become real on Day 2 when you collaborate in
-pairs.
-
-TOTHINKABOUT: Maybe also stagging? I find this especially useful when working with LLMs. Stage before sending the prompt and see the differences
+Don't worry about memorising. Today you'll *fork* once, then *stage*, *commit*,
+and *push* small changes. Branches and merges become real on Day 2 when you
+collaborate in pairs.
+Staging tip — especially useful with AI: stage your changes *before* you ask an
+LLM to review or before you accept its edits, then look at the diff of what's
+staged. Staging makes "what exactly changed?" an explicit, reviewable step
+rather than a leap of faith.
 
 ---
 
-## Slide 7 — EXERCISE: create a GitHub account
+## Slide 8 — EXERCISE: create a GitHub account
 
 **Title:** Step 1 — get an account
 
@@ -172,13 +202,24 @@ TOTHINKABOUT: Maybe also stagging? I find this especially useful when working wi
 Can you log in and see your (empty) GitHub dashboard?
 ```
 
+**⚠ Watch out (common blockers):**
+
+```text
+- Verification email can be slow or land in spam — check both.
+- Some corporate/university mail servers block the verification link;
+  have a fallback personal email ready.
+- The username becomes part of your public website URL later — choose
+  something you won't regret printing on a paper.
+```
+
 **Speaker note:**
-If anyone already has an account, great — just log in. Public usernames will
-appear in their website URL later, so pick something sensible.
+If anyone already has an account, great — just log in. Check out the GitHub
+*Student/Education* benefits here (free Pro features, private Pages) — worth
+applying for with a university email, and relevant two slides from now.
 
 ---
 
-## Slide 8 — EXERCISE: fork the repository
+## Slide 9 — EXERCISE: fork the repository
 
 **Title:** Step 2 — make it yours
 
@@ -191,13 +232,19 @@ appear in their website URL later, so pick something sensible.
 4. You now have:  github.com/<your-awesome-username>/the-science-repository
 ```
 
-TOTHINKABOUT: Maybe here is a good point to also explain the difference between a fork and a branch? Fork is an independent copy, branch is supposed to contribute back to the main project.
-
 **Key sentence:**
 
 ```text
 A fork is your own independent copy. You can change it freely
-without touching the original. 
+without touching the original.
+```
+
+**⚠ Watch out (common blockers):**
+
+```text
+- If you've forked this repo before, GitHub won't fork it twice —
+  just open your existing copy.
+- Don't accidentally fork into an organisation; fork into your own account.
 ```
 
 **Speaker note:**
@@ -206,7 +253,30 @@ This is the starting point for the whole three days. You can pull in new changes
 
 ---
 
-## Slide 9 — EXERCISE: turn on your website
+## Slide 10 — Fork vs branch
+
+**Title:** Two ways to make a copy — for different reasons
+
+**On slide:**
+
+```text
+Fork    an independent copy under YOUR account
+        → your own project, evolves on its own
+        → optional: contribute changes back to the original
+
+Branch  a parallel line of work INSIDE one repo
+        → meant to be merged back into that same repo
+        → how teammates work in parallel without clashing (Day 2)
+```
+
+**Speaker note:**
+Quick mental rule: you *fork* to take a project and make it your own; you
+*branch* to do a piece of work that you intend to fold back in. Today everyone
+forks. Tomorrow, in pairs, you'll branch and merge inside your fork.
+
+---
+
+## Slide 11 — EXERCISE: turn on your website
 
 **Title:** Step 3 — publish your analysis website
 
@@ -221,16 +291,25 @@ In YOUR fork on GitHub:
    https://<your-username>.github.io/the-science-repository/renders/webpage/
 ```
 
+**⚠ Watch out (common blockers):**
+
+```text
+- GitHub Pages on a FREE account needs a PUBLIC repo. Your fork of a public
+  template is public by default, so you're fine. A private repo needs
+  GitHub Pro / Education for Pages.
+- First build takes 1–2 minutes. A 404 usually means the build isn't done
+  yet, or the URL is wrong — it must end with  /renders/webpage/ .
+```
+
 **Speaker note:**
 This is the payoff moment. The website was rendered from the code in the repo,
 and GitHub is now serving *your* copy of it. Nobody wrote any HTML — it came from
-the analysis.
-
-TOTHINKABOUT: We may need to point them before that already to the education license of github. If not I think they have to make their project public before they can turn on GitHub pages.
+the analysis. If anyone made their repo private, this is where it bites — point
+them back to the Education benefit from Slide 8.
 
 ---
 
-## Slide 10 — EXERCISE: your first commit
+## Slide 12 — EXERCISE: your first commit
 
 **Title:** Step 4 — edit the README link and commit
 
@@ -241,19 +320,20 @@ The README points to the project's website. Make it point to YOURS.
 
 1. Open README.md on GitHub → click the pencil (edit)
 2. Find the website link near the top
-3. Replace the URL with your own github.io address (from Slide 9)
+3. Replace the URL with your own github.io address (from the previous step)
 4. Scroll down → "Commit changes"
    Message:  "Point website link to my fork"
 ```
 
 **Speaker note:**
-That edit-and-commit you just did *is* a commit and a push, done entirely in the
-browser. You've now changed your repo and saved a labelled snapshot of it. This
-is the core GitHub loop, in miniature.
+That edit-and-commit you just did *is* a commit, done entirely in the browser.
+You've changed your repo and saved a labelled snapshot of it. This is the core
+GitHub loop, in miniature. (Editing on GitHub commits straight to `main`; when we
+work locally later, you'll stage → commit → push as separate steps.)
 
 ---
 
-## Slide 11 — Forks, commits, merges — the picture
+## Slide 13 — Forks, commits, merges — the picture
 
 **Title:** What just happened, visually
 
@@ -274,7 +354,7 @@ more people.
 
 ---
 
-## Slide 12 — What must NEVER go on GitHub
+## Slide 14 — What must NEVER go on GitHub
 
 **Title:** Data protection checkpoint
 
@@ -298,7 +378,7 @@ protects you automatically.
 
 ---
 
-## Slide 13 — How the repo protects you: `.gitignore`
+## Slide 15 — How the repo protects you: `.gitignore`
 
 **Title:** Real data can't be committed by accident
 
@@ -321,7 +401,7 @@ pushed, even if you forget.
 
 # Part C — R + RStudio
 
-## Slide 14 — R vs RStudio
+## Slide 16 — R vs RStudio
 
 **Title:** The engine and the cockpit
 
@@ -341,7 +421,7 @@ today — that's Day 2. Today we just need it working.
 
 ---
 
-## Slide 15 — EXERCISE: install R and RStudio
+## Slide 17 — EXERCISE: install R and RStudio
 
 **Title:** Step 5 — install the software
 
@@ -360,14 +440,24 @@ Does RStudio open without errors?
 In the Console, type 1 + 1 and press Enter → you should see [1] 2
 ```
 
+**⚠ Watch out (common blockers):**
+
+```text
+- Install R FIRST, then RStudio (RStudio needs R to exist).
+- University laptops often need admin rights — sort this out before today.
+- Mac: pick the build for your chip (Apple Silicon vs Intel). If macOS
+  blocks the installer, right-click → Open, or allow it in
+  System Settings → Privacy & Security.
+- Antivirus on Windows can quarantine the installer — allow it.
+```
+
 **Speaker note:**
-Install R *first*, then RStudio. Windows and Mac differ slightly on the CRAN
-page — point to the right link. This is where setup problems surface, so go
-slowly and help neighbours.
+This is where setup problems surface, so go slowly and help neighbours. The
+1 + 1 check confirms RStudio actually found R.
 
 ---
 
-## Slide 16 — EXERCISE: get the repo onto your laptop
+## Slide 18 — EXERCISE: get the repo onto your laptop
 
 **Title:** Step 6 — clone your fork
 
@@ -379,18 +469,54 @@ Easiest in RStudio:
   Repository URL: https://github.com/<your-username>/the-science-repository
   → Create Project
 
-This downloads YOUR fork and opens it as an RStudio Project.
+Cloning = downloading YOUR fork (with its full history) to your machine.
+```
+
+**⚠ Watch out (common blockers):**
+
+```text
+- If the "Git" option is greyed out, Git isn't installed → install from
+  git-scm.com, restart RStudio.
+- FIRST TIME ONLY — tell Git who you are (same email as GitHub):
+    git config --global user.name  "Your Name"
+    git config --global user.email "you@university.edu"
+- Pushing over HTTPS no longer accepts your password. When asked, paste a
+  Personal Access Token (GitHub → Settings → Developer settings → PAT),
+  or run  usethis::create_github_token()  then  gitcreds::gitcreds_set().
+  Simplest fallback: install GitHub Desktop and clone from there.
 ```
 
 **Speaker note:**
-Cloning = downloading your GitHub copy to your machine, with its history
-attached. RStudio can do it through menus, no command line needed.
-
-TOTHINKABOUT: Maybe we can here already nonetheless teach about cloning just so they understand the difference. A potential blockade may be that in the first round, they need to have set their username and email locally.
+Cloning is the mirror image of forking: fork copies on GitHub, clone copies to
+your laptop. The identity + token setup is the single most common place people
+get stuck — budget time for it and have the PAT steps on a cheatsheet.
 
 ---
 
-## Slide 17 — Open the project, not the files
+## Slide 19 — (Optional) Start a project from scratch
+
+**Title:** How RStudio Projects get created
+
+**On slide:**
+
+```text
+File → New Project → …
+  1. New Directory       a brand-new empty project folder
+  2. Existing Directory  wrap a project around a folder you already have
+  3. Version Control     clone from GitHub (what we just did)
+
+Every option produces a  .Rproj  file = the project's anchor.
+```
+
+**Speaker note:**
+Optional detour for the curious — useful so they understand that "clone from
+GitHub" is just one of three ways to get a `.Rproj`. For their own future
+projects, option 1 or 2 is common; for collaborative work, version control from
+the start is best.
+
+---
+
+## Slide 20 — Open the project, not the files
 
 **Title:** Always open via the .Rproj
 
@@ -410,34 +536,35 @@ The number-one beginner trap is "R can't find my file". Opening the project
 fixes most of it, because paths are anchored to the project root, not your
 Desktop.
 
-TOTHINKABOUT: Maybe here it could also make sense to have a really short detour to show how to set up a R-project from scrap. Three options (version controlled), just in a folder, and the third one
-
 ---
 
-## Slide 18 — RStudio in 60 seconds
+## Slide 21 — RStudio in 60 seconds
 
-**Title:** The four panes
+**Title:** The four panes (and the Terminal)
 
 **On slide:**
 
 ```text
 Source       where you write and save scripts
-Console      where R runs commands
+Console      where R runs R commands
 Environment  the objects currently in memory
 Files/Plots/Packages/Help   manage files, see figures, read docs
+
+Terminal tab (next to Console): your computer's command line —
+  this is where git and `quarto render` commands run.
 ```
 
 **Speaker note:**
-That's all you need today. We'll live in these panes properly on Day 2. For now,
-just know where the Console is — we'll type one command into it next.
-
-TOTHINKABOUT: Maybe we can show them both the console and the terminal?
+That's all you need today. The one addition worth flagging: the **Console** runs
+*R* code, while the **Terminal** runs *system* commands (git, quarto). People mix
+these up constantly — when we render later, that goes in the Terminal, not the
+Console.
 
 ---
 
 # Part D — Environment control (renv)
 
-## Slide 19 — The "works on my machine" problem
+## Slide 22 — The "works on my machine" problem
 
 **Title:** Why pinning package versions matters
 
@@ -451,16 +578,18 @@ Same code + different package versions = different (or broken) results.
 ```
 
 **Speaker note:**
-Reproducibility isn't only about your code — it's also about the exact versions
-of the tools your code depends on. This repo solves that with `renv`.
-
-TOTHINKABOUT: Maybe it can make sense to make the comparison to github? Github and git make sure your codes are versionend and reproducible; environment managers like renv make sure your libraries in your environment are versioned.
-
-TOTHINKABOUT: Maybe we can make this even clearer by saying that I have already worked on this repository and it would take a long time to install everything on every computer. renv solves this by making a snapshot of everything installed.
+Two layers of reproducibility, one clean analogy:
+- **Git/GitHub** version your *code* — every change to your scripts is tracked.
+- **renv** versions your *packages* — the exact libraries your code depends on.
+You need both; pinned code running on drifting packages still breaks.
+Concretely: I already built and tested this repo. Installing every package by
+hand on each of your laptops would take forever and still drift. Instead I took a
+*snapshot* of exactly what's installed (`renv.lock`), and you'll restore that
+same snapshot in one command.
 
 ---
 
-## Slide 20 — What renv does
+## Slide 23 — What renv does
 
 **Title:** renv = a locked, per-project package library
 
@@ -480,7 +609,7 @@ isolated set of packages, described precisely in `renv.lock`.
 
 ---
 
-## Slide 21 — EXERCISE: restore the environment
+## Slide 24 — EXERCISE: restore the environment
 
 **Title:** Step 7 — install the exact packages
 
@@ -499,16 +628,26 @@ This can take a few minutes — that's normal.
 When it finishes, you have every package the project needs.
 ```
 
+**⚠ Watch out (common blockers):**
+
+```text
+- If prompted "Do you want to proceed? [y/N]" — type y and Enter.
+- First restore can compile packages from source. Mac users may be asked to
+  install the Xcode Command Line Tools — accept it.
+- It can take 5–15 min on a fresh machine. Let it finish; don't interrupt.
+- Needs a stable internet connection — conference Wi-Fi can stall it.
+```
+
 **Speaker note:**
-Run this in the Console. It may ask to proceed — say yes. This is the moment
-everyone's environment becomes identical. Later, after adding a package, you'd
-run `renv::snapshot()` to record it — but not today.
+Run this in the Console (it's R code). This is the moment everyone's environment
+becomes identical. Later, after adding a package, you'd run `renv::snapshot()` to
+record it — but not today.
 
 ---
 
-# Part E — Documentation & data
+# Part E — Documentation
 
-## Slide 22 — README: the front door
+## Slide 25 — README: the front door
 
 **Title:** Every project explains itself
 
@@ -525,13 +664,13 @@ Every folder also has its OWN README (R/, data/, reports/, renders/...).
 
 **Speaker note:**
 If you open this project in six months, the README gets you back in. When you
-fork for your own work, you rewrite the README first.
-
-TOTHINKABOUT: Maybe it is important to make clear that this something they need to maintain?
+fork for your own work, you rewrite the README first. And it's not write-once: the
+README is *living documentation* — every time the project's structure or setup
+changes, the README is the thing you update so it never lies to future-you.
 
 ---
 
-## Slide 23 — Markdown, lightly
+## Slide 26 — Markdown, lightly
 
 **Title:** READMEs are written in Markdown
 
@@ -547,36 +686,38 @@ It's the "Documentation" box in the diagram.
 
 **Speaker note:**
 You already used Markdown when you edited the README on GitHub. It's deliberately
-simple — the same syntax shows up in Quarto later today.
+simple — the same syntax shows up in Quarto in a moment.
 
 ---
 
-## Slide 24 — Mock vs real data: `.Renviron`
+# Part F — Publishing: ingredients → outputs
 
-**Title:** Step 8 — choose your data mode
+## Slide 27 — What goes into an output
+
+**Title:** Quarto pulls four things together
 
 **On slide:**
 
-```bash
-cp .Renviron.example .Renviron      # make your own local copy
-```
-
 ```text
-Inside .Renviron:
-  DATA_MODE=mock   → uses the safe synthetic dataset (default, today)
-  DATA_MODE=real   → uses your private raw data (your own projects only)
+R/ functions      the engine (the numbers)        ┐
+data/             the data                         ├─ ingredients
+references.bib    the citations                    ┘
+.qmd recipe       text + code chunks that tie it together
+        │  quarto render
+        ▼
+   website  /  manuscript
 ```
 
 **Speaker note:**
-`.Renviron` is local and gitignored — it never gets committed. Today everyone
-stays on `mock`. The same code runs on real data later just by flipping this
-switch, with no code changes.
-
-TOTHINKABOUT: Maybe we should leave this to day 3 when we talk about LLM use in the repository? You are welcome to create a skeleton for that already and move this there if you think it makes sense.
+Transition slide. We've installed the tools — now, what does it actually take to
+produce an output? Four things. We already have the engine (`R/`). The next two
+ingredients are the **data** and the **references**; then **Quarto** is the recipe
+that combines them. The next few slides walk those four parts in order, so nothing
+appears out of nowhere.
 
 ---
 
-## Slide 25 — The three data buckets
+## Slide 28 — Ingredient 1: the three data buckets
 
 **Title:** raw → processed → mock
 
@@ -584,21 +725,23 @@ TOTHINKABOUT: Maybe we should leave this to day 3 when we talk about LLM use in 
 
 ```text
 data/raw/        original data, exactly as received — never hand-edited (private)
-data/processed/  cleaned, analysis-ready — created BY scripts, can be rebuilt (private)
+data/processed/  cleaned, analysis-ready — created BY a script, can be rebuilt (private)
 data/mock/       synthetic stand-in — committed, safe to share, used in the workshop
 ```
 
 **Speaker note:**
-Raw is input you never touch. Processed is output a script creates. Mock is the
-public, synthetic version that lets us all run the same examples safely.
-
-TOTHINKABOUT: If I remember correctly the processed folder only fills up when we run a specific script. Do we need to do this before we run quarto renders? Ah no, if I remember correctly, the mock data is used for everything and creates a file in processed. If we move from mock to real data in the environment variable a different folder is used?
+Raw is input you never touch; processed is output a script creates; mock is the
+public, synthetic version we all run today. How it actually flows in this repo:
+by default the project reads from **mock** (no setup needed — `mock` is the
+default mode). When the website renders, the first page
+(`01-data-preparation`) cleans the data and *writes the cache*
+`data/processed/consumer_clean.rds`; the later pages reuse it. So `processed/`
+fills itself when you render — you don't create it by hand. (Switching to real
+data swaps the *source* to `data/raw/`; that's a Day 3 topic.)
 
 ---
 
-# Part F — Reference management (Zotero)
-
-## Slide 26 — Zotero and citations
+## Slide 29 — Ingredient 2: Zotero and citations
 
 **Title:** Manage references once, cite everywhere
 
@@ -615,17 +758,13 @@ references/references.bib      ONE shared bibliography
 ```
 
 **Speaker note:**
-This is the "Reference management" box. You keep your library in Zotero, export a
-`.bib` file into the repo, and *both* outputs cite from the same source. Change a
-reference once, it updates everywhere.
-
-TOTHINKABOUT: I feel like the three data buckets and zotero citations come a bit as a surprise. Any idea how to make the transitions smoother? Also moving them could work?
+The second ingredient. You keep your library in Zotero, export a `.bib` file into
+`references/`, and *both* outputs cite from the same source. Change a reference
+once, it updates everywhere — no re-typing citations into two documents.
 
 ---
 
-# Part G — Publisher (Quarto) & outputs
-
-## Slide 27 — What is Quarto?
+## Slide 30 — What is Quarto?
 
 **Title:** Quarto = prose + code → polished output
 
@@ -641,13 +780,13 @@ Quarto runs the code and weaves results into the finished document.
 ```
 
 **Speaker note:**
-Quarto is the "Publisher" box. The key idea: your figures and tables are *not*
-pasted in — they're generated when the document renders, straight from the `R/`
-engine. No copy-paste, no stale numbers.
+Quarto is the "Publisher" box — the recipe that combines the ingredients. The key
+idea: your figures and tables are *not* pasted in — they're generated when the
+document renders, straight from the `R/` engine. No copy-paste, no stale numbers.
 
 ---
 
-## Slide 28 — Code runs top to bottom
+## Slide 31 — Code runs top to bottom
 
 **Title:** A report is a recipe, read in order
 
@@ -666,11 +805,12 @@ They all call the shared functions in  R/functions/.
 **Speaker note:**
 This ordering — prepare, describe, analyse — is the backbone of the whole
 analysis, and the same order you'll work in on Day 2. Code always executes from
-the top down; nothing later works if something earlier failed.
+the top down; nothing later works if something earlier failed. (This is also why
+`01-data-preparation` must run before the others — it builds the cache they need.)
 
 ---
 
-## Slide 29 — Two outputs from one engine
+## Slide 32 — Two outputs from one engine
 
 **Title:** Website and manuscript, same numbers
 
@@ -690,9 +830,9 @@ Output.
 
 ---
 
-## Slide 30 — EXERCISE: render the website
+## Slide 33 — EXERCISE: render the website
 
-**Title:** Step 9 — build the site locally
+**Title:** Step 8 — build the site locally
 
 **On slide:**
 
@@ -706,6 +846,18 @@ Open renders/webpage/index.html to see it.
 (Quarto ships inside RStudio — no separate install needed.)
 ```
 
+**⚠ Watch out (common blockers):**
+
+```text
+- Run this in the TERMINAL tab, not the R Console.
+- Render the WHOLE site (reports/webpage), not a single page — the first
+  page builds the data/processed cache the others depend on.
+- If "quarto: command not found", update RStudio (recent versions bundle
+  Quarto) or install from quarto.org.
+- The manuscript also needs a LaTeX engine (tinytex) — that's a Day 3 topic.
+  The WEBSITE is today's finish line.
+```
+
 **Speaker note:**
 This is the same render that GitHub ran for your Pages site. Now you can do it on
 your own laptop and preview before pushing. If it builds, your R + renv + Quarto
@@ -713,7 +865,7 @@ chain is fully working — that's the Day 1 finish line.
 
 ---
 
-## Slide 31 — The manuscript and Overleaf
+## Slide 34 — The manuscript and Overleaf
 
 **Title:** The paper, and how co-authors join in
 
@@ -736,33 +888,32 @@ parts still come from your R code. We go deeper on Day 3.
 
 ---
 
-# Part H — Wrap-up
+# Part G — Wrap-up
 
-## Slide 32 — A word on AI assistants
+## Slide 35 — When something breaks: common blockers
 
-**Title:** Coding assistants — helpful, with guardrails
+**Title:** Where people get stuck (and the fix)
 
 **On slide:**
 
 ```text
-AI can help: explain code, draft README text, debug errors.
-
-This repo guards your data:
-  .claude/settings.json          blocks AI tools from reading raw/processed data
-  *.llm.code-workspace           hides private data from the editor
-
-Rule: AI supports the workflow — it does not receive confidential data.
+"Git option greyed out"        → install Git (git-scm.com), restart RStudio
+"Authentication failed" on push→ use a Personal Access Token, not a password
+"Could not find function"      → package not loaded → did renv::restore() finish?
+"cannot open file ... raw/..." → you're in real mode; default is mock (do nothing)
+Website shows 404              → wait for the build; URL ends /renders/webpage/
+"quarto: command not found"    → update RStudio / install from quarto.org
+A single page won't render     → render the whole reports/webpage folder
 ```
 
 **Speaker note:**
-Light touch today — the "Coding assistants" box exists and the repo is built to
-keep raw data away from AI tools. We cover responsible AI use properly on Day 3.
-
-TOTHINKABOUT: I feel like we may not need this right now.
+Keep this as the catch-all reference slide. Most Day 1 pain is one of these seven.
+Normalise it: errors are expected, and a structured error message is a clue, not a
+failure. This is also the page to point at during the optional afternoon support.
 
 ---
 
-## Slide 33 — What we deliberately skipped
+## Slide 36 — What we deliberately skipped
 
 **Title:** Not today
 
@@ -771,18 +922,18 @@ TOTHINKABOUT: I feel like we may not need this right now.
 ```text
 Deep R syntax        → Day 2 (objects, functions, dataframes, modelling)
 VS Code              → Day 3 (RStudio is our environment for now)
-The Shiny app        → optional, not part of this workshop
+Real data            → Day 3 (everything today runs on safe mock data)
+Responsible AI use   → Day 3 (the repo's AI guardrails, in context)
 ```
 
 **Speaker note:**
 Keeping scope tight is intentional. If your setup works, you're exactly where you
-need to be.
-
-TOTHINKABOUT: I think we can remove all of the shiny app parts from this repository and the workshop. We should focus on the html output as the "interactive" output. Shiny feels like too much for this workshop.
+need to be. Everything on the right is parked for a specific later slot, not
+forgotten.
 
 ---
 
-## Slide 34 — End-of-Day-1 checklist
+## Slide 37 — End-of-Day-1 checklist
 
 **Title:** Before you leave today
 
@@ -796,19 +947,17 @@ TOTHINKABOUT: I think we can remove all of the shiny app parts from this reposit
 [ ] R and RStudio installed
 [ ] Fork cloned and opened via the .Rproj
 [ ] renv::restore() finished successfully
-[ ] .Renviron copied (DATA_MODE=mock)
 [ ] quarto render reports/webpage works locally
 ```
 
 **Speaker note:**
-Run through this as an exit check. Anyone with unticked boxes should grab the
-optional support session — Day 2 assumes all of this works.
-
-TOTHINKABOUT: I kind of like this checklist. Maybe we can start with this actually and be a bit funny: Who knows these words? After today, we hope you do.
+Remember the words from this morning (Slide 2)? This is the same list, now as
+done/not-done. Run through it as an exit check. Anyone with unticked boxes should
+grab the optional support session — Day 2 assumes all of this works.
 
 ---
 
-## Slide 35 — Tomorrow
+## Slide 38 — Tomorrow
 
 **Title:** Day 2 — analyse the data in R
 
